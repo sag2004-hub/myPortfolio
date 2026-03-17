@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
-  <title>Sagnik Dutta — Full Stack Developer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/png" href="./assets/img/icon.png">
+  <title>Sagnik Dutta</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
 
@@ -43,48 +45,57 @@
     /* ═══════════════════════════════════
        CUSTOM CURSOR — Enhanced magnetic feel
     ═══════════════════════════════════ */
-    .cursor-dot {
-      width: 8px; height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 99999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.05s ease, background 0.2s ease, width 0.2s ease, height 0.2s ease;
-      mix-blend-mode: screen;
-    }
-    .cursor-ring {
-      width: 40px; height: 40px;
-      border: 1.5px solid rgba(124,106,255,0.5);
-      border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 99998;
-      transform: translate(-50%, -50%);
-      transition: width 0.25s cubic-bezier(0.23,1,0.32,1),
-                  height 0.25s cubic-bezier(0.23,1,0.32,1),
-                  border-color 0.25s ease,
-                  background 0.25s ease,
-                  border-radius 0.25s ease;
-    }
-    /* Cursor states */
-    body.cursor-hover .cursor-dot {
-      width: 6px; height: 6px;
-      background: var(--accent2);
-    }
-    body.cursor-hover .cursor-ring {
-      width: 60px; height: 60px;
-      border-color: var(--accent2);
-      background: rgba(255,106,124,0.06);
-    }
-    body.cursor-click .cursor-dot {
-      transform: translate(-50%, -50%) scale(0.6);
-    }
-    body.cursor-click .cursor-ring {
-      width: 30px; height: 30px;
-      background: rgba(124,106,255,0.15);
-    }
-    /* Hide cursor on mobile */
-    @media (pointer: coarse) { .cursor-dot, .cursor-ring { display: none; } body { cursor: auto; } }
+    /* ═══════════════════════════════
+   ARROW CURSOR (NO TAIL, NO LAG)
+═══════════════════════════════ */
+
+/* ═══════════════════════════════
+   CLEAN ARROW (NO TAIL)
+═══════════════════════════════ */
+
+body {
+  cursor: none;
+}
+
+.cursor-arrow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+
+  /* Triangle arrow */
+  border-left: 16px solid var(--accent3);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+
+  pointer-events: none;
+  z-index: 99999;
+
+  transform: translate(0, 0) rotate(-15deg);
+  transition: transform 0.08s ease, filter 0.2s ease;
+}
+
+/* Hover effect */
+body.cursor-hover .cursor-arrow {
+  transform: scale(1.2) rotate(-15deg);
+  filter: brightness(1.3);
+}
+
+/* Click effect */
+body.cursor-click .cursor-arrow {
+  transform: scale(0.85) rotate(-15deg);
+}
+
+/* Hide on mobile */
+@media (pointer: coarse) {
+  .cursor-arrow {
+    display: none;
+  }
+  body {
+    cursor: auto;
+  }
+}
 
     /* ═══════════════════════════════════
        NOISE TEXTURE OVERLAY
@@ -1113,9 +1124,8 @@
 </head>
 <body>
 
-  <!-- ── Custom Cursor ── -->
-  <div class="cursor-dot"  id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+  <!-- Arrow Cursor -->
+<div class="cursor-arrow" id="cursorArrow"></div>
 
   <!-- ── Navigation ── -->
   <nav class="nav">
@@ -1144,9 +1154,9 @@
           <div class="hero__content">
             <div class="hero__eyebrow"><span class="dot"></span>Available for opportunities</div>
             <h1 class="hero__name">Sagnik<br><span class="accent">Dutta.</span></h1>
-            <p class="hero__role">Full Stack Developer · AI/ML · IoT</p>
+            <p class="hero__role">Full Stack Developer · GenAI Developer · IoT</p>
             <p class="hero__desc">
-              3rd year CSE student at Sister Nivedita University. I build full-stack products, explore AI & machine learning, and connect the physical world with IoT. Passionate about solving real problems with elegant code.
+              3rd year CSE student at Sister Nivedita University. I build full-stack products, explore AI & machine learning, and connect the physical world with IoT, and love to build tools with GenAI. Passionate about solving real problems with elegant code. Currently in my third year, passionate about coding, innovation, and leadership.
             </p>
             <div class="hero__actions">
               <a href="#projects"                             class="btn btn-primary"><i class="ri-folder-2-line"></i>  View Projects</a>
@@ -1165,9 +1175,15 @@
             <div class="hero__image-ring">
               <img src="assets/img/profile-removebg-preview (2).png" alt="Sagnik Dutta" class="hero__img">
             </div>
-            <div class="hero__chip" style="top:8%;right:0%;animation-delay:-0.5s"><i class="ri-code-s-slash-line"></i>Full Stack Dev</div>
-            <div class="hero__chip" style="bottom:12%;left:-5%;animation-delay:-2s"><i class="ri-brain-line"></i>AI / ML</div>
-            <div class="hero__chip" style="top:52%;right:-8%;animation-delay:-3.5s"><i class="ri-cpu-line"></i>IoT Builder</div>
+            <!-- Existing chips (for reference) -->
+<div class="hero__chip" style="top:8%;right:0%;animation-delay:-0.5s"><i class="ri-code-s-slash-line"></i>Full Stack Dev</div>
+<div class="hero__chip" style="bottom:10%;left:0%;animation-delay:-2s"><i class="ri-brain-line"></i>AI/ML Explorer</div>
+<div class="hero__chip" style="top:42%;right:-8%;animation-delay:-3.5s"><i class="ri-cpu-line"></i>IoT Builder</div>
+
+<!-- New chips -->
+<div class="hero__chip" style="top:8%;left:0%;animation-delay:-1s"><i class="ri-rocket-line"></i>Emerging CEO 10X Club</div>
+<div class="hero__chip" style="bottom:10%;right:-10%;animation-delay:-4s"><i class="ri-heart-3-line"></i>Community Contributor</div>
+<div class="hero__chip" style="top:42%;left:-6%;animation-delay:-5.5s"><i class="ri-group-line"></i>Collaborative Builder</div>
           </div>
 
         </div>
@@ -1193,6 +1209,12 @@
         <div class="skill-icon"><img src="assets/img/skills-figma.svg"       alt=""><span>Figma</span></div>
         <div class="skill-icon"><img src="assets/img/c++.svg"               alt=""><span>C++</span></div>
         <div class="skill-icon"><img src="assets/img/c-1.svg"               alt=""><span>C</span></div>
+        <div class="skill-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Jupyter_logo.svg"               alt=""><span>Jupyter notebook</span></div>
+        <div class="skill-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Colaboratory_SVG_Logo.svg"               alt=""><span>Google Collab</span></div>
+        <div class="skill-icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW6eyjw-sncwZxtTnaQj66DdHF2PJ0uL6PGQ&s"               alt=""><span>Firebase</span></div>
+        <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg"               alt=""><span>Arduino</span></div>
+        <div class="skill-icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8oMAAe6rM5sL2vKX0-30c3LWBiH2LRU4Yrw&s"               alt=""><span>Canva</span></div>
+        <div class="skill-icon"><img src="https://cdn.sanity.io/images/34ent8ly/production/ec37a3660704e1fa2b4246c9a01ab34e145194ad-824x824.png"               alt=""><span>Render</span></div>
         <!-- ── DUPLICATE BLOCK (required for seamless loop animation) ── -->
         <div class="skill-icon"><img src="assets/img/skills-react.svg"       alt=""><span>React</span></div>
         <div class="skill-icon"><img src="assets/img/nodejs-icon.svg"        alt=""><span>Node.js</span></div>
@@ -1209,6 +1231,12 @@
         <div class="skill-icon"><img src="assets/img/skills-figma.svg"       alt=""><span>Figma</span></div>
         <div class="skill-icon"><img src="assets/img/c++.svg"               alt=""><span>C++</span></div>
         <div class="skill-icon"><img src="assets/img/c-1.svg"               alt=""><span>C</span></div>
+        <div class="skill-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Jupyter_logo.svg"               alt=""><span>Jupyter notebook</span></div>
+        <div class="skill-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Colaboratory_SVG_Logo.svg"               alt=""><span>Google Collab</span></div>
+        <div class="skill-icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW6eyjw-sncwZxtTnaQj66DdHF2PJ0uL6PGQ&s"               alt=""><span>Firebase</span></div>
+        <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg"               alt=""><span>Arduino</span></div>
+        <div class="skill-icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8oMAAe6rM5sL2vKX0-30c3LWBiH2LRU4Yrw&s"               alt=""><span>Canva</span></div>
+        <div class="skill-icon"><img src="https://cdn.sanity.io/images/34ent8ly/production/ec37a3660704e1fa2b4246c9a01ab34e145194ad-824x824.png"               alt=""><span>Render</span></div>
       </div>
     </div>
 
@@ -1228,7 +1256,173 @@
           <!-- ── PROJECT CARD ── -->
           <div class="project-card reveal">
             <div class="project-img-wrap">
-              <img src="assets/img/Screenshot 2025-06-16 234550.png" alt="Vanish">
+              <img src="assets/img/arist.png" alt="Vanish">
+              <div class="project-img-overlay"></div>
+              <span class="project-badge live">● Live</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-name">NetGenome</h3>
+              <p class="project-desc">LazyIndie is a dynamic full-stack music ecosystem leveraging React, Vite, and Web3 technology to provide an interactive, animated platform for AI-powered artist matching and secure collaboration.</p>
+              <div class="project-tags">
+  <span class="project-tag">React + Vite (Frontend)</span>
+  <span class="project-tag">Tailwind CSS (Styling)</span>
+  <span class="project-tag">Framer Motion (Animations)</span>
+  <span class="project-tag">AI Chat Integration (NLP Matching)</span>
+  <span class="project-tag">Solana Web3 Wallet Integration</span>
+  <span class="project-tag">Real-time Community Collaboration</span>
+</div>
+              <div class="project-links">
+                <a href="https://github.com/sag2004-hub/Lazyindie" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i> Project link</a>
+                <a href="https://lazyindie.vercel.app/" target="_blank" class="btn btn-ghost"><i class="fa-solid fa-link"></i>Live Link</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PROJECT CARD ── -->
+          <div class="project-card reveal">
+            <div class="project-img-wrap">
+              <img src="assets/img/Face_tracker.png" alt="VR Dating">
+              <div class="project-img-overlay"></div>
+              <span class="project-badge live">● Live</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-name">FaceVision</h3>
+              <p class="project-desc">A high-performance React application leveraging face-api.js for instant, client-side facial landmarks, emotion recognition, and demographic analysis directly in the browser.</p>
+              <div class="project-tags">
+                  <span class="project-tag">Figma</span>
+                  <span class="project-tag">VR</span>
+                  <span class="project-tag">React.js</span>
+                  <span class="project-tag">TensorFlow.js</span>
+                  <span class="project-tag">Computer Vision</span>
+                  <span class="project-tag">WebRTC</span>
+                  <span class="project-tag">Machine Learning</span>
+            </div>
+            <div class="project-links">
+                <a href="https://github.com/sag2004-hub/FaceExpression_and_Age_Detection" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i>Project Link</a>
+                <a href="https://lnkd.in/dt-4ARjH" target="_blank" class="btn btn-ghost"><i class="fa-solid fa-link"></i>Live Link</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PROJECT CARD ── -->
+          <div class="project-card reveal">
+            <div class="project-img-wrap">
+              <img src="assets/img/reposcope.png" alt="VR Dating">
+              <div class="project-img-overlay"></div>
+              <span class="project-badge live">● Live</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-name">RepoScope</h3>
+              <p class="project-desc">RepoScope is an advanced, browser-based analytics platform delivering instant, detailed insights into GitHub repository health, activity trends, and language distribution.</p>
+              <div class="project-tags">
+  <span class="project-tag">React + Vite</span>
+  <span class="project-tag">GitHub REST API</span>
+  <span class="project-tag">API Integration & Data Fetching</span>
+  <span class="project-tag">Data Visualization</span>
+</div>
+            <div class="project-links">
+                <a href="https://github.com/sag2004-hub/repo-analyzer" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i>Project Link</a>
+                <a href="https://repo-analyzer-nine.vercel.app/" target="_blank" class="btn btn-ghost"><i class="fa-solid fa-link"></i>Live Link</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PROJECT CARD ── -->
+          <div class="project-card reveal">
+            <div class="project-img-wrap">
+              <img src="assets/img/EasyTrack.png" alt="VR Dating">
+              <div class="project-img-overlay"></div>
+              <span class="project-badge live">● Live</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-name">EasyTrack</h3>
+              <p class="project-desc">EasyTrack is a life-saving geospatial application that leverages real-time Geolocation and Mapping APIs to deliver instant, shortest-route navigation to nearby hospitals during medical emergencies.</p>
+              <div class="project-tags">
+  <span class="project-tag">React + Vite</span>
+  <span class="project-tag">Geolocation API</span>
+  <span class="project-tag">Google Maps/Mapbox API</span>
+  <span class="project-tag">Real-time Tracking</span>
+</div>
+            <div class="project-links">
+                <a href="https://github.com/sag2004-hub/location_tracker" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i>Project Link</a>
+                <a href="https://location-tracker-eta-five.vercel.app/" target="_blank" class="btn btn-ghost"><i class="fa-solid fa-link"></i>Live Link</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PROJECT CARD ── -->
+          <div class="project-card reveal">
+            <div class="project-img-wrap">
+              <img src="assets/img/pixelcraft.png" alt="VR Dating">
+              <div class="project-img-overlay"></div>
+              <span class="project-badge live">● Live</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-name">PixelCraft</h3>
+              <p class="project-desc">PixelCraft is a cutting-edge collaborative design platform that synchronizes real-time vector editing and interactive prototyping through a high-performance, Firebase-powered architecture.</p>
+              <div class="project-tags">
+  <span class="project-tag">React + Vite</span>
+  <span class="project-tag">Firebase</span>
+  <span class="project-tag">Vector Graphics</span>
+  <span class="project-tag">Tailwind CSS + Framer Motion</span>
+  <span class="project-tag">State Management</span>
+</div>
+            <div class="project-links">
+                <a href="https://github.com/sag2004-hub/canvas_to_code_2.0" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i>Project Link</a>
+                <a href="https://pixelcraft-kohl.vercel.app/" target="_blank" class="btn btn-ghost"><i class="fa-solid fa-link"></i>Live Link</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PROJECT CARD ── -->
+          <div class="project-card reveal">
+            <div class="project-img-wrap">
+              <img src="assets/img/chat.png" alt="VR Dating">
+              <div class="project-img-overlay"></div>
+              <span class="project-badge live">● Live</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-name">Neura Chat</h3>
+              <p class="project-desc">Neura Chat is an advanced, browser-based AI conversation tool that harnesses the power of the Google Gemini API to provide instant, high-fidelity assistance with programming, creative writing, and complex problem-solving.</p>
+              <div class="project-tags">
+  <span class="project-tag">Google Gemini API</span>
+  <span class="project-tag">React + Vite</span>
+  <span class="project-tag">Express.js/Node.js</span>
+</div>
+            <div class="project-links">
+              <a href="https://github.com/sag2004-hub/gemini-chat-frontend" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i>Frontend</a>
+                <a href="https://github.com/sag2004-hub/gemini-chat-backend" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i>Backend</a>
+                <a href="https://gemini-chat-eight-kappa.vercel.app/" target="_blank" class="btn btn-ghost"><i class="fa-solid fa-link"></i>Live Link</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PROJECT CARD ── -->
+          <div class="project-card reveal">
+            <div class="project-img-wrap">
+              <img src="assets/img/algo.png" alt="VR Dating">
+              <div class="project-img-overlay"></div>
+              <span class="project-badge live">● Live</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-name">ALGO Mania</h3>
+              <p class="project-desc">Algo Mania is a dynamic educational platform leveraging high-performance React and Vite to transform complex algorithms into intuitive, real-time interactive visualizations, accelerating learning and analysis for users.</p>
+              <div class="project-tags">
+  <span class="project-tag">React + Vite</span>
+  <span class="project-tag">Data Structure & Algorithm (DSA)</span>
+  <span class="project-tag">Real-time Visualization (DOM Manipulation)</span>
+</div>
+            <div class="project-links">
+                <a href="https://github.com/sag2004-hub/algo_analyser" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i>Project Link</a>
+                <a href="https://algo-mania.vercel.app/" target="_blank" class="btn btn-ghost"><i class="fa-solid fa-link"></i>Live Link</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PROJECT CARD ── -->
+          <div class="project-card reveal">
+            <div class="project-img-wrap">
+              <img src="assets/img/vanish.png" alt="Vanish">
               <div class="project-img-overlay"></div>
               <span class="project-badge live">● Live</span>
             </div>
@@ -1236,13 +1430,15 @@
               <h3 class="project-name">Vanish — Fire Safety Training App</h3>
               <p class="project-desc">Automated flame & gas detection combined with interactive video training for hotel staff — turning preparedness into confidence.</p>
               <div class="project-tags">
-                <span class="project-tag">React</span>
-                <span class="project-tag">MongoDB</span>
-                <span class="project-tag">Figma</span>
+                <span class="project-tag">React + Redux</span>
+  <span class="project-tag">Game Development (Canvas/Phaser)</span>
+  <span class="project-tag">AI Chatbot (NLP API)</span>
+  <span class="project-tag">Sensor Data Integration (IoT)</span>
                 <span class="project-tag">Arduino</span>
               </div>
               <div class="project-links">
-                <a href="https://github.com/soham-711/Vanish-Project" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i> GitHub</a>
+                <a href="https://github.com/soham-711/Vanish-Project" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i> Project link</a>
+                <a href="https://vanish-ytwu.onrender.com/" target="_blank" class="btn btn-ghost"><i class="fa-solid fa-link"></i>Live Link</a>
               </div>
             </div>
           </div>
@@ -1250,60 +1446,18 @@
           <!-- ── PROJECT CARD ── -->
           <div class="project-card reveal">
             <div class="project-img-wrap">
-              <img src="assets/img/Screenshot 2025-06-16 234929.png" alt="EcoXchange">
+              <img src="assets/img/arson.png" alt="Arson AI">
               <div class="project-img-overlay"></div>
               <span class="project-badge live">● Live</span>
             </div>
             <div class="project-body">
-              <h3 class="project-name">EcoXchange — Reusable Material Marketplace</h3>
-              <p class="project-desc">Buy, sell, or exchange reusable materials directly — reducing waste, conserving resources, and strengthening a sustainable community.</p>
-              <div class="project-tags">
-                <span class="project-tag">React</span>
-                <span class="project-tag">Node.js</span>
-                <span class="project-tag">MongoDB</span>
-                <span class="project-tag">JavaScript</span>
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/sinchan261/EcoXchange" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i> GitHub</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── PROJECT CARD ── -->
-          <div class="project-card reveal">
-            <div class="project-img-wrap">
-              <img src="assets/img/Screenshot 2025-06-16 235301.png" alt="EnableHire">
-              <div class="project-img-overlay"></div>
-              <span class="project-badge live">● Live</span>
-            </div>
-            <div class="project-body">
-              <h3 class="project-name">Enable Hire — Job Platform for Differently Abled</h3>
-              <p class="project-desc">Bridges the employment gap by matching differently-abled individuals with their perfect opportunities — unlocking potential and dignity for all.</p>
-              <div class="project-tags">
-                <span class="project-tag">React</span>
-                <span class="project-tag">Node.js</span>
-                <span class="project-tag">MongoDB</span>
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/soham-711/EnableHire" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i> GitHub</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── PROJECT CARD ── -->
-          <div class="project-card reveal">
-            <div class="project-img-wrap">
-              <img src="assets/img/Screenshot 2025-06-16 235540.png" alt="Arson AI">
-              <div class="project-img-overlay"></div>
-              <span class="project-badge live">● Live</span>
-            </div>
-            <div class="project-body">
-              <h3 class="project-name">Arson AI — Automated Fire Suppression Bot</h3>
-              <p class="project-desc">A smart robot equipped with multi-sensors, navigating through danger to track, suppress, and control fires in high-risk spaces.</p>
+              <h3 class="project-name">Arsona Sentinel</h3>
+              <p class="project-desc">Arsona Sentinel is a pioneering autonomous firefighting robot that integrates real-time sensor fusion and IoT-driven mobile control to detect and neutralize fire emergencies with surgical precision.</p>
               <div class="project-tags">
                 <span class="project-tag">React Native</span>
-                <span class="project-tag">Figma</span>
                 <span class="project-tag">IoT</span>
+                <span class="project-tag">Autonomous Robotics</span>
+  <span class="project-tag">Sensor Fusion (Flame & Thermal)</span>
               </div>
               <div class="project-links">
                 <a href="https://github.com/soham-711/ArsonaFontend" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i> Frontend</a>
@@ -1315,81 +1469,22 @@
           <!-- ── PROJECT CARD ── -->
           <div class="project-card reveal">
             <div class="project-img-wrap">
-              <img src="assets/img/Screenshot 2025-06-17 000048.png" alt="Fram Market">
+              <img src="assets/img/barta.png" alt="BartaOne">
               <div class="project-img-overlay"></div>
               <span class="project-badge live">● Live</span>
-            </div>
-            <div class="project-body">
-              <h3 class="project-name">Fram Market — Farm-to-Door Delivery App</h3>
-              <p class="project-desc">Bringing farm-fresh produce straight to your doorstep — cutting out middlemen, reducing waste, and empowering farmers.</p>
-              <div class="project-tags">
-                <span class="project-tag">HTML/CSS</span>
-                <span class="project-tag">JavaScript</span>
-                <span class="project-tag">MySQL</span>
-                <span class="project-tag">Figma</span>
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/sag2004-hub/Farm_Market" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i> GitHub</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── PROJECT CARD ── -->
-          <div class="project-card reveal">
-            <div class="project-img-wrap">
-              <img src="assets/img/Screenshot 2025-06-17 000815.png" alt="Desk Assistant">
-              <div class="project-img-overlay"></div>
-              <span class="project-badge live">● Live</span>
-            </div>
-            <div class="project-body">
-              <h3 class="project-name">Desk Assistant — Jarvis-like AI Sidekick</h3>
-              <p class="project-desc">Your very own digital sidekick — managing routines, schedules, and tasks while freeing you up to focus on creativity and innovation.</p>
-              <div class="project-tags">
-                <span class="project-tag">Python</span>
-                <span class="project-tag">HTML/CSS</span>
-                <span class="project-tag">JavaScript</span>
-                <span class="project-tag">MySQL</span>
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/sag2004-hub/sofia" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i> GitHub</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── PROJECT CARD ── -->
-          <div class="project-card reveal">
-            <div class="project-img-wrap">
-              <img src="assets/img/Screenshot 2025-06-17 001226.png" alt="AI Exam Prep">
-              <div class="project-img-overlay"></div>
-              <span class="project-badge soon">⏳ Coming Soon</span>
-            </div>
-            <div class="project-body">
-              <h3 class="project-name">AI-Powered Exam Prep — Personalized Study Platform</h3>
-              <p class="project-desc">Tailored study plans, practice exams, and AI-powered resources — making your path to success smarter, faster, and less stressful.</p>
-              <div class="project-tags">
-                <span class="project-tag">React</span>
-                <span class="project-tag">Python</span>
-                <span class="project-tag">MongoDB</span>
-                <span class="project-tag">Tailwind</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── PROJECT CARD ── -->
-          <div class="project-card reveal">
-            <div class="project-img-wrap">
-              <img src="assets/img/Screenshot 2025-06-17 001632.png" alt="BartaOne">
-              <div class="project-img-overlay"></div>
-              <span class="project-badge soon">⏳ Coming Soon</span>
             </div>
             <div class="project-body">
               <h3 class="project-name">BartaOne — All-in-One News Platform</h3>
-              <p class="project-desc">Stay connected with articles, live news, and stories from trustworthy sources — delivering the world to your fingertips, 24/7.</p>
+              <p class="project-desc">BartaOne is a blockchain-powered news platform which helps to stay connected with articles, live news, and stories from trustworthy sources 24*7</p>
               <div class="project-tags">
-                <span class="project-tag">React</span>
-                <span class="project-tag">React Native</span>
-                <span class="project-tag">Gemini AI</span>
-                <span class="project-tag">MongoDB</span>
+                <span class="project-tag">React + vite</span>
+  <span class="project-tag">Aptos Blockchain (Move Lang)</span>
+  <span class="project-tag">Tokenomics ($NICE Minting)</span>
+  <span class="project-tag">Petra Wallet Integration</span>
+  <span class="project-tag">Crypto Reward Systems</span>
+</div>
+              <div class="project-links">
+                <a href="https://github.com/sag2004-hub/hackathon_folder" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i>Project Link</a>
               </div>
             </div>
           </div>
@@ -1397,19 +1492,47 @@
           <!-- ── PROJECT CARD ── -->
           <div class="project-card reveal">
             <div class="project-img-wrap">
-              <img src="assets/img/Screenshot 2025-06-17 002228.png" alt="VR Dating">
+              <img src="assets/img/face.png" alt="Vanish">
+              <div class="project-img-overlay"></div>
+              <span class="project-badge live">● Live</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-name">Face Attendance System</h3>
+              <p class="project-desc">Face Attendance System is a modern, full-stack biometric solution leveraging React (Vite) and Python-based computer vision to provide real-time facial recognition and automated, secure attendance tracking for organizations.</p>
+              <div class="project-tags">
+  <span class="project-tag">React + Vite (Frontend)</span>
+  <span class="project-tag">Python</span>
+  <span class="project-tag">OpenCV & face_recognition</span>
+</div>
+              <div class="project-links">
+                <a href="https://github.com/sag2004-hub/face_attendance_system" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i> Project link</a>
+                <a href="https://face-attendance-system-eight.vercel.app/" target="_blank" class="btn btn-ghost"><i class="fa-solid fa-link"></i>Live Link</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PROJECT CARD ── -->
+          <div class="project-card reveal">
+            <div class="project-img-wrap">
+              <img src="assets/img/chem.png" alt="Vanish">
               <div class="project-img-overlay"></div>
               <span class="project-badge soon">⏳ Coming Soon</span>
             </div>
             <div class="project-body">
-              <h3 class="project-name">VR Dating App — Experience Connection in VR</h3>
-              <p class="project-desc">Meet, connect, and form relationships in a rich, realistic VR space — adding depth and authenticity to your dating experience.</p>
+              <h3 class="project-name">Chemical Reaction Visualizer</h3>
+              <p class="project-desc">A comprehensive full-stack chemical visualizer that transforms complex reaction data into interactive, real-time molecular simulations through a Figma-optimized interface and RESTful architecture.</p>
               <div class="project-tags">
-                <span class="project-tag">Figma</span>
-                <span class="project-tag">VR</span>
+  <span class="project-tag">React.js (Frontend)</span>
+  <span class="project-tag">Node.js (Backend)</span>
+  <span class="project-tag">RESTful API Design</span>
+  <span class="project-tag">Figma (UI/UX Design)</span>
+</div>
+              <div class="project-links">
+                <a href="https://github.com/sag2004-hub/chemical-reaction-visualizer" target="_blank" class="btn btn-ghost"><i class="ri-github-fill"></i> Project link</a>
               </div>
             </div>
           </div>
+          
 
           <!--
           ══════════════════════════════════════════════
@@ -1622,10 +1745,23 @@
         </div>
       </div>
 
-      <!-- Volunteering: IIC Innovation Utsab -->
+      <!-- GirlScript Summer of Code Campus Ambassador -->
       <div class="timeline-item reveal">
         <div class="timeline-dot"></div>
         <div class="timeline-content left">
+          <div class="timeline-date">May 2024 - August 2024</div>
+          <h3 class="timeline-title">Community Contributor</h3>
+          <h4 class="timeline-company">GirlScript Summer of Code (GSSoC)</h4>
+          <ul class="timeline-desc">
+            <li>Representing GSSoC, giving open-source contributions</li>
+            <li>Contributing to the open source as participant</li>
+          </ul>
+        </div>
+
+      <!-- Volunteering: IIC Innovation Utsab -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content right">
           <div class="timeline-date">January 2024</div>
           <h3 class="timeline-title">Volunteer (Management Team)</h3>
           <h4 class="timeline-company">IIC Innovation Utsab • Institution's Innovation Council</h4>
@@ -1993,34 +2129,24 @@
     /* ─────────────────────────────────────────
        CURSOR — smooth magnetic feel
     ───────────────────────────────────────── */
-    const dot  = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
+    const cursor = document.getElementById("cursorArrow");
 
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      dot.style.left = mx + 'px';
-      dot.style.top  = my + 'px';
-    });
+document.addEventListener("mousemove", (e) => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top  = e.clientY + "px";
+});
 
-    // Ring follows with lerp for smooth lag
-    function lerpRing() {
-      rx += (mx - rx) * 0.1;
-      ry += (my - ry) * 0.1;
-      ring.style.left = rx + 'px';
-      ring.style.top  = ry + 'px';
-      requestAnimationFrame(lerpRing);
-    }
-    lerpRing();
+// Hover detection
+const interactives = "a, button, .skill-pill, .project-card, .hack-card, .cert-card, .contact__info-item";
 
-    // Hover state — interactive elements
-    const interactives = 'a, button, .skill-pill, .project-card, .hack-card, .cert-card, .contact__info-item';
-    document.querySelectorAll(interactives).forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-    });
-    document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
-    document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
+document.querySelectorAll(interactives).forEach(el => {
+  el.addEventListener("mouseenter", () => document.body.classList.add("cursor-hover"));
+  el.addEventListener("mouseleave", () => document.body.classList.remove("cursor-hover"));
+});
+
+// Click effect
+document.addEventListener("mousedown", () => document.body.classList.add("cursor-click"));
+document.addEventListener("mouseup", () => document.body.classList.remove("cursor-click"));
 
     /* ─────────────────────────────────────────
        ACTIVE NAV LINK on scroll
